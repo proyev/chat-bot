@@ -1,2 +1,13 @@
-* {
-box-sizing: border-box;}
+* {	
+box-sizing: border-box;
+}
+
+header {
+background-color: black;
+color: red;
+}
+
+footer {
+background-color: red;
+color: black;
+}
