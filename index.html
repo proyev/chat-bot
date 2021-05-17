@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>Chat-bot-Tod</title>
 		<meta charset='utf-8'/>
@@ -8,13 +8,28 @@
 	<body>
 		<header><h1>Hello from the header</h1></header>
 		<main></main>
-		<footer><h3>Footer sends his best</h3></footer>
+		<footer>
+			<h1>Footer sends his best</h1>
+			<form id='response-form'>
+				<label for='answer'>Do not keep the me waiting</label>
+				<input type='text' id='answer' name='answer' placeholder='Answer the question'/>
+			</form>
+		</footer>
 		<!-- Add jQuery -->
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 		<script src='src/logic.js'></script>
 		<script>
 			$('title').text('jQuery is working');
 			testFunc();
+
+			//Add communication btw form and logic
+			$('form').on('submit', function(event){
+				console.log('Form sends hi');
+				event.preventDefault();
+				let answer = $('#answer').val();
+				$('header h1').text(`${testComFun(answer)}`);
+				console.log($('header h1').text(testComFun(answer)));
+			});
 		</script>
 	</body>
 </html>
