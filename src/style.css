@@ -1,13 +1,42 @@
 * {	
-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 header {
-background-color: black;
-color: red;
+    background-color: black;
+    color: red;
+    width: 100vw;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+main {
+    background-image: url('mob-landing.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 240px);
 }
 
 footer {
-background-color: red;
-color: black;
+    width: 100vw;
+    height: 140px;
+    background-color: red;
+    color: black;
+    position: absolute;
+    top: calc(100vh - 140px);
+    left: 0;
+}
+
+footer #answer {
+    width: 45%;
+}
+
+footer label {
+    width: 45%;
 }
