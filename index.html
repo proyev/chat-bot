@@ -3,11 +3,14 @@
 	<head>
 		<title>Chat-bot-Tod</title>
 		<meta charset='utf-8'/>
-		<link href='src/style.css' rel='stylesheet' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'/>
+		<link href='src/style.css' rel='stylesheet'/>
 	</head>
 	<body>
 		<header><h1>Hello from the header</h1></header>
-		<main></main>
+		<main>
+
+		</main>
 		<footer>
 			<h1>Footer sends his best</h1>
 			<form id='response-form'>
@@ -28,6 +31,8 @@
 				event.preventDefault();
 				let answer = $('#answer').val();
 				$('header h1').text(`${testComFun(answer)}`);
+
+				//
 				console.log($('header h1').text(testComFun(answer)));
 			});
 		</script>
