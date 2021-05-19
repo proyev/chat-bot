@@ -1,5 +1,29 @@
 let testFunc = () => console.log('Logic is working');
 
+function generateHTMLResponse(type, msg, timeStamp){
+
+	let sender = '',
+		html = '';
+	if (type === 'answer-bubble'){
+		sender = 'You';
+	} else {
+		sender = 'Interrogator';
+	}
+
+	html = `<div class='phrase ${type}'>
+				<div class='person'>
+					<span>${sender}</span>	
+				</div>
+				<p>${msg}</p>
+				<div class="meta">
+					<span class="date-time">${timeStamp}</span>
+				</div>
+			</div>`;
+
+	return html;
+
+
+
 const testComFun = msg => {
 	let retVal;
 	console.log(msg);
@@ -99,4 +123,4 @@ function gameOver(status) {
 			break;
 	}
 
-}
+}}
