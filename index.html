@@ -7,16 +7,59 @@
 		<link href='src/style.css' rel='stylesheet'/>
 	</head>
 	<body>
-		<header><h1>Hello from the header</h1></header>
-		<main>
+<!--		<header><h1>Hello from the header</h1></header>-->
+		<main id='main'>
+<!--			<section id='landing-page'></section>-->
+<!--			<section id='rules'></section>-->
+<!--			<section id='game'></section>-->
+			<div class="phrase">
+				<div class="int">
+					<span>Interrogator</span>
+				</div>
+				<div class="answer-bubble">
+					<p>Hello</p>
+					<div class="meta">
+						<span class="date-time">4:20 PM</span>
+					</div>
+				</div>
+			</div>
+			<div class="ph">
+				<div class="you">
+					<span>You</span>
+				</div>
+				<div class="question-bubble">
+					<p>Where </p>
+					<div class="meta">
+						<span class="date-time">4:20 PM</span>
+					</div>
+				</div>
+			</div>
+			<div class="phrase">
+				<div class="answer-bubble">
+					<p>a shit lot of thdkhjhdfagkajdfh kadf jhadfkgjadfh kfhj gjfafgdfl gjhf ljdlf la kag</p>
+					<div class="meta">
+						<span class="date-time">4:20 PM</span>
+					</div>
+				</div>
+			</div>
+			<div class="ph">
+				<div class="question-bubble">
+					<p>ahahfgaelrijae jepag j aelrk jeal hah d ejhadlkh jdalkh jdalh kjda hlad jladkhj adl</p>
+					<div class="meta">
+						<span class="date-time">4:20 PM</span>
+					</div>
+				</div>
+			</div>
 
 		</main>
 		<footer>
-			<h1>Footer sends his best</h1>
+<!--			<h1>Footer sends his best</h1>-->
 			<form id='response-form'>
-				<label for='answer'>Do not keep the me waiting</label>
-				<input type='text' id='answer' name='answer' placeholder='Answer the question'/>
+<!--				<label for='answer'>Do not keep the me waiting</label>-->
+<!--				<input type='text' id='answer' name='answer' placeholder='Answer the question'/>-->
+				<textarea type='text' id='answer-field' placeholder='Do not keep the interrogator waiting...'></textarea>
 			</form>
+
 		</footer>
 		<!-- Add jQuery -->
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
@@ -34,7 +77,36 @@
 
 				//
 				console.log($('header h1').text(testComFun(answer)));
+
 			});
+
+			$('textarea').on('keypress', function (event){
+				if(event.which == 13){
+					console.log($('textarea').val());
+					$('<div>').html('<div class="answer-bubble"><p>`${$('textarea').val()}`</p><div class="meta"><span class="date-time">4:20 PM</span></div></div>').addClass('phrase').appendTo('main');
+
+					addClass('phrase')
+
+							.text(`${$('textarea').val()}`)
+							.appendTo('main');
+					$('textarea').val('');
+				}
+			});
+
+			// const setBrightness = () => {
+			// 	let brightness = 0.8 + (Math.random() * 0.5);
+			// 	console.log(brightness);
+			// 	// document.getElementById('#main').style.width = (Math.random() * 100) + '%';
+			// 	// $('main').style.width =
+			// 	// $('main').style.filter = 'brightness(' + brightness + ')';
+			// 	// document.getElementById('#main').style.filter = 'brightness(' + brightness + ')';
+			// 	$('main').style.opacity = String(brightness);
+			// 	console.log(document.getElementById('#main'));
+			//
+			// }
+			//
+			// window.setInterval(setBrightness, 1000);
+
 		</script>
 	</body>
 </html>

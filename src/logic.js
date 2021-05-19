@@ -23,6 +23,11 @@ const showID = spyStatus => {
 	// return
 }
 
+//prints the current question on the screen and returns the answer back to the game
+const askQuestion = question => {
+
+}
+
 function checkAskedQuestions(askedQuestions, lastQuestion) {
 	askedQuestions.push(lastQuestion);
 	if (askedQuestions.length > 2){
@@ -39,6 +44,9 @@ const startGame = () => {
 	let dizzyCounter = 0, aggressiveCounter = 0,
 		questionCounter = 0, releaseCounter = 0;
 
+	let askedQuestions = [], lastQuestion = '';
+
+	//depending
 	spyStatus = Math.floor(Math.random() * 2);
 	showID(spyStatus);
 
@@ -53,18 +61,15 @@ const startGame = () => {
 
 	}
 
-	const askedQuestions = [];
 
-	interrogatorQuestionnaire = {
-		'State your name': {
-			answer: 'Sam Sepiol',
 
-		}
-		// 'State your age'
-	}
+	interrogatorQuestionnaire = ['State your name',
+								'Tell me how old are you',
+	];
 
+	interrogatorAnswers = []
 	//now questions will be asked
-
+	if (askQuestion('State your name'));
 
 }
 
