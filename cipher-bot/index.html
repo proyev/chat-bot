@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Cipher Bot</title>
+		<meta charset='utf-8'/>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'/>
+		<link href='src/style.css' rel='stylesheet'/>
+	</head>
+	<body>
+		<main id='main'>
+			<!-- Launch instructions -->
+			<div class='phrase question-bubble'>
+				<div class='person'>
+					<span>Bot</span>
+				</div>
+					<p>Hello, I'm a ciphering bot. I can use one of three ciphers to encrypt your message: caesar, symbol, reverse</p>
+			</div>
+			<div class='phrase question-bubble'>
+				<div class='person'>
+					<span>Bot</span>
+				</div>
+				<p>You can encrypt your message by typing 'type of cipher' followed by ':' and your message. In that order please, my creator made me kinda stupid</p>
+			</div>
+			<div class='phrase question-bubble'>
+				<div class='person'>
+					<span>Bot</span>
+				</div>
+				<p>For example: "ceaser: some message", and I will return your message ciphered using caesar cipher</p>
+			</div>
+			<div class='phrase question-bubble'>
+				<div class='person'>
+					<span>Bot</span>
+				</div>
+				<p>It doesn't matter, whether your message is written in upper or lower case</p>
+			</div>
+			<div class='phrase question-bubble'>
+				<div class='person'>
+					<span>Bot</span>
+				</div>
+				<p>If you want to know, what each cipher does, simply type whatis(type of cypher)</p>
+			</div>
+		</main>
+		<footer>
+			<form id='response-form'>
+				<textarea type='text' id='answer-field' placeholder="Type your message here and press 'Enter'" required></textarea>
+			</form>
+		</footer>
+		<!-- Add jQuery -->
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+
+		<!-- Add logic -->
+		<script src='src/logic.js'></script>
+		<script>
+			//Add communication btw form and logic
+			$('textarea').on('keypress', function (event){
+
+				//13 corresponds to the keypress number of 'Enter'
+				//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
+				if(event.which == 13){
+
+					let msg = $('textarea').val();
+
+					//input field check
+					if (msg.match(/[a-zA-Z0-9:()*&^%$#@!?]/)) {
+
+						//generates the html code for the response field
+						let userHTML = generateHTMLResponse('answer-bubble', msg);
+						$(`${userHTML}`).appendTo('main');
+
+						//to keep the viewport in place of the last messages
+						let element = document.querySelector('main');
+						element.scroll(0, element.scrollHeight);
+						$('textarea').val(null);
+
+						let botHTML = cipherThis(msg);
+						$(`${botHTML}`).appendTo('main');
+						element.scroll(0, element.scrollHeight);
+
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
