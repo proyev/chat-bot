@@ -152,11 +152,10 @@ let keyCounter = 0;
 //Add communication btw form and logic
 $('textarea').on('keydown', function (event){
 	// console.log($(this).val() !== $(this).defaultValue)
-	if ($(this).val() !== $(this).defaultValue) {
-		$('#answer-field').animate({width: '300px'}, 250);
-		$('#send-icon').css({display: 'block'});
 
-	}
+	$('#answer-field').animate({width: '320px'}, 250);
+	$('#send-icon').css({display: 'block'});
+
 	//13 corresponds to the keypress number of 'Enter'
 	//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
 	if(event.key === 'Enter'){
@@ -200,6 +199,31 @@ $('textarea').on('keydown', function (event){
 	}
 });
 
+$('textarea').on('keyup', function (event) {
+	event.preventDefault();
+	if ($(this).val().trim() === '' ||
+		$(this).val() === $(this).defaultValue){
+		// $('#send-icon').animate({ backgroundImage: 'url("src/send_icon.png")'}, 'fast');
+		// $('#send-icon').css({ 'background-image': 'url("src/send_icon.png")'});
+
+		//this animation needs proper adjustments
+		if ($('#send-icon').css('background-image') !== 'url("http://localhost:63342/challenge/cipher-bot/src/send_icon.png")'){
+			console.log($('#send-icon').css('background-image'));
+			console.log('triggered');
+			$("#send-icon").stop().animate({opacity: 0},50,function(){
+				$(this).css({'background-image': 'url("src/send_icon.png")'})
+					.animate({opacity: 1},{duration:150});
+			});
+		}
+
+	} else {
+		//if not the right background - change to it
+		// add hover text hints
+		// if ()
+		$('#send-icon').css({ 'background-image': 'url("src/hover.png")'});
+	}
+});
+
 $('textarea').on('focusout', function (event){
 	event.preventDefault();
 	keyCounter = 0;
@@ -209,7 +233,6 @@ $('textarea').on('focusout', function (event){
 		$('#send-icon').css({display: 'none'});
 		$('#answer-field').animate({width: '360px'}, 250);
 	}
-
 });
 
 

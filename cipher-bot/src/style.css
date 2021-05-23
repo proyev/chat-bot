@@ -110,8 +110,11 @@ footer #send-icon {
     float: right;
     /*background-color: red;*/
     /*color: saddlebrown;*/
-    background-image: url("send_icon.png");
+    background-image: url("hover.png");
     background-size: contain;
     background-repeat: no-repeat;
+}
 
+footer #send-icon:hover {
+    background-image: url("active.png");
 }
