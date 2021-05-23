@@ -145,7 +145,7 @@ $('textarea').on('keypress', function (event){
 	//13 corresponds to the keypress number of 'Enter'
 	//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
 	if(event.which == 13){
-
+		event.preventDefault();
 		let msg = $('textarea').val();
 
 		//input field check
@@ -158,7 +158,8 @@ $('textarea').on('keypress', function (event){
 			//to keep the viewport in place of the last messages
 			let element = document.querySelector('main');
 			element.scroll(0, element.scrollHeight);
-			$('textarea').val(null);
+			// $('textarea').val(null);
+			$('textarea').val($('textarea').defaultValue);
 
 			let botHTML = cipherThis(msg);
 			$(`${botHTML}`).appendTo('main');
