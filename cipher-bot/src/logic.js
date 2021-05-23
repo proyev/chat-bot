@@ -144,19 +144,29 @@ function generateHTMLResponse(type, msg) {
 const commandHistory = [];
 let keyCounter = 0;
 
+// $('textarea').on('keypress', function (event){
+// 	console.log(event.key);
+// });
+
+
 //Add communication btw form and logic
 $('textarea').on('keydown', function (event){
+	// console.log($(this).val() !== $(this).defaultValue)
+	if ($(this).val() !== $(this).defaultValue) {
+		$('#answer-field').animate({width: '300px'}, 250);
+		$('#send-icon').css({display: 'block'});
 
+	}
 	//13 corresponds to the keypress number of 'Enter'
 	//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
 	if(event.key === 'Enter'){
 
 		event.preventDefault();
-		let msg = $('textarea').val();
+		let msg = $(this).val();
 
 		//input field check
 		if (msg.match(/[a-zA-Z0-9:()*&^%$#@!?]/)) {
-
+			commandHistory.push(msg);
 			//generates the html code for the response field
 			let userHTML = generateHTMLResponse('answer-bubble', msg);
 			$(`${userHTML}`).appendTo('main');
@@ -165,7 +175,7 @@ $('textarea').on('keydown', function (event){
 			let element = document.querySelector('main');
 			element.scroll(0, element.scrollHeight);
 			// $('textarea').val(null);
-			$('textarea').val($('textarea').defaultValue);
+			$(this).val($(this).defaultValue);
 
 			let botHTML = cipherThis(msg);
 			$(`${botHTML}`).appendTo('main');
@@ -173,9 +183,8 @@ $('textarea').on('keydown', function (event){
 
 		}
 	} else if(event.key === 'ArrowUp') {
-
 		keyCounter++;
-		$('textarea').val(commandHistory[commandHistory.length - keyCounter]);
+		$(this).val(commandHistory[commandHistory.length - keyCounter]);
 
 		if (keyCounter === commandHistory.length + 1){
 			keyCounter = 0;
@@ -183,7 +192,7 @@ $('textarea').on('keydown', function (event){
 	} else if(event.key === 'ArrowDown') {
 
 		keyCounter--;
-		$('textarea').val(commandHistory[commandHistory.length - keyCounter /*+ keyDownCounter*/]);
+		$(this).val(commandHistory[commandHistory.length - keyCounter /*+ keyDownCounter*/]);
 
 		if (keyCounter < 0){
 			keyCounter = 0;
@@ -194,4 +203,13 @@ $('textarea').on('keydown', function (event){
 $('textarea').on('focusout', function (event){
 	event.preventDefault();
 	keyCounter = 0;
+
+	if ($(this).val() === undefined || $(this).val() === '') {
+
+		$('#send-icon').css({display: 'none'});
+		$('#answer-field').animate({width: '360px'}, 250);
+	}
+
 });
+
+
