@@ -78,10 +78,11 @@ footer #answer-field {
     resize: none;
     font-family: 'Special Elite', cursive;
     font-size: 18px;
-    width: 360px;
-    /*width: 300px;*/
     min-height: 25px;
     max-height: 65px;
+    width: 360px;
+    /*width: 300px;*/
+
     /*height: 60px;*/
     height: fit-content;
     overflow-y: scroll;
@@ -101,8 +102,9 @@ footer #send-icon {
     display: none;
     /*visibility: hidden;*/
     text-align: center;
-    width: 60px;
-    height: 75px;
+    width: 30px;
+    height: 44px;
+    margin: 15.5px 5px;
     /*position: absolute;*/
     /*margin: auto;*/
     float: right;
