@@ -107,12 +107,6 @@ function cipherThis(msg) {
 	}
 }
 
-const history = (msg) =>{
-	let commands = [];
-	commands.push(msg);
-	return commands;
-}
-
 /*this funciton takes:
 	-> type - shows, whether it is a user or bot message,
 	BE ALERTED, the bubble names were made with initial game in mind, so, naming is a bit poor, yeah...
@@ -148,8 +142,7 @@ function generateHTMLResponse(type, msg) {
 
 
 const commandHistory = [];
-let keyUpCounter = 0,
-	keyDownCounter = 0;
+let keyCounter = 0;
 
 //Add communication btw form and logic
 $('textarea').on('keydown', function (event){
@@ -157,9 +150,10 @@ $('textarea').on('keydown', function (event){
 	//13 corresponds to the keypress number of 'Enter'
 	//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
 	if(event.key === 'Enter'){
+
 		event.preventDefault();
 		let msg = $('textarea').val();
-		commandHistory.push(msg);
+
 		//input field check
 		if (msg.match(/[a-zA-Z0-9:()*&^%$#@!?]/)) {
 
@@ -176,33 +170,28 @@ $('textarea').on('keydown', function (event){
 			let botHTML = cipherThis(msg);
 			$(`${botHTML}`).appendTo('main');
 			element.scroll(0, element.scrollHeight);
+
 		}
 	} else if(event.key === 'ArrowUp') {
-		keyUpCounter++;
-		console.log(`Key up ${keyUpCounter}`);
-		$('textarea').val(commandHistory[commandHistory.length - keyUpCounter]);
 
-		if (keyUpCounter > commandHistory.length){
-			keyUpCounter = 0;
-			console.log(`Key up ${keyUpCounter}`);
+		keyCounter++;
+		$('textarea').val(commandHistory[commandHistory.length - keyCounter]);
+
+		if (keyCounter === commandHistory.length + 1){
+			keyCounter = 0;
 		}
 	} else if(event.key === 'ArrowDown') {
-		keyDownCounter++;
-		console.log('right thing');
-		console.log(`Key down ${keyDownCounter}`);
-		$('textarea').val(commandHistory[commandHistory.length - keyUpCounter + keyDownCounter]);
 
-		if (keyDownCounter >= keyUpCounter + 1){
-			console.log('wrong thing');
-			keyDownCounter = 0;
-			console.log(`Key down ${keyDownCounter}`);
+		keyCounter--;
+		$('textarea').val(commandHistory[commandHistory.length - keyCounter /*+ keyDownCounter*/]);
+
+		if (keyCounter < 0){
+			keyCounter = 0;
 		}
 	}
 });
 
 $('textarea').on('focusout', function (event){
 	event.preventDefault();
-	console.log('area out of focus');
-	keyUpCounter = 0;
-	keyDownCounter = 0;
+	keyCounter = 0;
 });
