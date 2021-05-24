@@ -144,9 +144,6 @@ function generateHTMLResponse(type, msg) {
 	return html;
 }
 
-// $('textarea').on('keypress', function (event){
-// 	console.log(event.key);
-// });
 const sendMessage = () => {
 
 	let msg = $('textarea').val();
@@ -161,15 +158,17 @@ const sendMessage = () => {
 		//to keep the viewport in place of the last messages
 		let element = document.querySelector('main');
 		element.scroll(0, element.scrollHeight);
-		// $('textarea').val(null);
+
+		//reset the textbox after each sent message
 		$('textarea').val($('textarea').defaultValue);
 
 		let botHTML = cipherThis(msg);
 		$(`${botHTML}`).appendTo('main');
 		element.scroll(0, element.scrollHeight);
 
+		//icon color change animation - https://coderwall.com/p/vtvmsa/change-the-background-image-with-animate
 		$("#send-icon").stop().animate({opacity: 0},50,function(){
-			$(this).css({'background-image': 'url("src/send_icon.png")'})
+			$(this).css({'background-image': 'url("src/inactive.png")'})
 				.animate({opacity: 1},{duration:150});
 		});
 	}
@@ -179,27 +178,26 @@ const sendMessage = () => {
 
 //Add communication btw form and logic
 $('textarea').on('keydown', function (event){
-	// console.log($(this).val() !== $(this).defaultValue)
 
 	$('#answer-field').animate({width: '320px'}, 250);
 	$('#send-icon').css({display: 'block'});
 
-	//13 corresponds to the keypress number of 'Enter'
-	//found this line of code here: https://howtodoinjava.com/jquery/jquery-detect-if-enter-key-is-pressed/
 	if(event.key === 'Enter'){
-
 		event.preventDefault();
 		sendMessage();
 
+	//this part allows to scroll through the already sent messages in terminal fashion
 	} else if(event.key === 'ArrowUp') {
+		event.preventDefault();
 		keyCounter++;
 		$(this).val(commandHistory[commandHistory.length - keyCounter]);
 
 		if (keyCounter === commandHistory.length + 1){
 			keyCounter = 0;
 		}
-	} else if(event.key === 'ArrowDown') {
 
+	} else if(event.key === 'ArrowDown') {
+		event.preventDefault();
 		keyCounter--;
 		$(this).val(commandHistory[commandHistory.length - keyCounter]);
 
@@ -209,34 +207,30 @@ $('textarea').on('keydown', function (event){
 	}
 });
 
+
+//part of coloring send-icon logic
 $('textarea').on('keyup', function (event) {
 	event.preventDefault();
 	icon_url = $('#send-icon').css('background-image');
+
 	if ($(this).val().trim() === '' ||
 		$(this).val() === $(this).defaultValue){
-		// $('#send-icon').animate({ backgroundImage: 'url("src/send_icon.png")'}, 'fast');
-		// $('#send-icon').css({ 'background-image': 'url("src/send_icon.png")'});
 
-		if (!icon_url.includes('send_icon.png')){
+		if (!icon_url.includes('inactive.png')){
 			console.log($('#send-icon').css('background-image'));
 			console.log('triggered');
 			$("#send-icon").stop().animate({opacity: 0},50,function(){
-				$(this).css({'background-image': 'url("src/send_icon.png")'})
+				$(this).css({'background-image': 'url("src/inactive.png")'})
 					.animate({opacity: 1},{duration:150});
 			});
 		}
 
 	} else {
-		//if not the right background - change to it
-		// add hover text hints
-		// if ()
-		// $('#send-icon').css({ 'background-image': 'url("src/hover.png")'});
 
-
-		if (!icon_url.includes('hover.png')){
+		if (!icon_url.includes('active.png')){
 
 			$("#send-icon").stop().animate({opacity: 0},50,function(){
-				$(this).css({'background-image': 'url("src/hover.png")'})
+				$(this).css({'background-image': 'url("src/active.png")'})
 					.animate({opacity: 1},{duration:150});
 			});
 		}
@@ -244,6 +238,7 @@ $('textarea').on('keyup', function (event) {
 	}
 });
 
+//textarea resizing
 $('textarea').on('focusout', function (event){
 	event.preventDefault();
 	keyCounter = 0;
@@ -255,7 +250,8 @@ $('textarea').on('focusout', function (event){
 	}
 });
 
-if (!icon_url.includes('send_icon.png')) {
+//send-message button
+if (icon_url.includes('active.png')) {
 	$('#send-icon').on('click', function (event){
 		event.preventDefault();
 		sendMessage();
