@@ -1,3 +1,7 @@
+const commandHistory = [];
+let keyCounter = 0;
+let icon_url = $('#send-icon').css('background-image');
+
 //caesarCipher, symbolCipher, reverseCipher functions were
 //taken from Codecademy node.js course
 
@@ -140,14 +144,38 @@ function generateHTMLResponse(type, msg) {
 	return html;
 }
 
-
-const commandHistory = [];
-let keyCounter = 0;
-
 // $('textarea').on('keypress', function (event){
 // 	console.log(event.key);
 // });
+const sendMessage = () => {
 
+	let msg = $('textarea').val();
+
+	//input field check
+	if (msg.match(/[a-zA-Z0-9:()*&^%$#@!?]/)) {
+		commandHistory.push(msg);
+		//generates the html code for the response field
+		let userHTML = generateHTMLResponse('answer-bubble', msg);
+		$(`${userHTML}`).appendTo('main');
+
+		//to keep the viewport in place of the last messages
+		let element = document.querySelector('main');
+		element.scroll(0, element.scrollHeight);
+		// $('textarea').val(null);
+		$('textarea').val($('textarea').defaultValue);
+
+		let botHTML = cipherThis(msg);
+		$(`${botHTML}`).appendTo('main');
+		element.scroll(0, element.scrollHeight);
+
+		$("#send-icon").stop().animate({opacity: 0},50,function(){
+			$(this).css({'background-image': 'url("src/send_icon.png")'})
+				.animate({opacity: 1},{duration:150});
+		});
+	}
+
+	keyCounter = 0;
+}
 
 //Add communication btw form and logic
 $('textarea').on('keydown', function (event){
@@ -161,26 +189,8 @@ $('textarea').on('keydown', function (event){
 	if(event.key === 'Enter'){
 
 		event.preventDefault();
-		let msg = $(this).val();
+		sendMessage();
 
-		//input field check
-		if (msg.match(/[a-zA-Z0-9:()*&^%$#@!?]/)) {
-			commandHistory.push(msg);
-			//generates the html code for the response field
-			let userHTML = generateHTMLResponse('answer-bubble', msg);
-			$(`${userHTML}`).appendTo('main');
-
-			//to keep the viewport in place of the last messages
-			let element = document.querySelector('main');
-			element.scroll(0, element.scrollHeight);
-			// $('textarea').val(null);
-			$(this).val($(this).defaultValue);
-
-			let botHTML = cipherThis(msg);
-			$(`${botHTML}`).appendTo('main');
-			element.scroll(0, element.scrollHeight);
-
-		}
 	} else if(event.key === 'ArrowUp') {
 		keyCounter++;
 		$(this).val(commandHistory[commandHistory.length - keyCounter]);
@@ -191,7 +201,7 @@ $('textarea').on('keydown', function (event){
 	} else if(event.key === 'ArrowDown') {
 
 		keyCounter--;
-		$(this).val(commandHistory[commandHistory.length - keyCounter /*+ keyDownCounter*/]);
+		$(this).val(commandHistory[commandHistory.length - keyCounter]);
 
 		if (keyCounter < 0){
 			keyCounter = 0;
@@ -201,13 +211,13 @@ $('textarea').on('keydown', function (event){
 
 $('textarea').on('keyup', function (event) {
 	event.preventDefault();
+	icon_url = $('#send-icon').css('background-image');
 	if ($(this).val().trim() === '' ||
 		$(this).val() === $(this).defaultValue){
 		// $('#send-icon').animate({ backgroundImage: 'url("src/send_icon.png")'}, 'fast');
 		// $('#send-icon').css({ 'background-image': 'url("src/send_icon.png")'});
 
-		//this animation needs proper adjustments
-		if ($('#send-icon').css('background-image') !== 'url("http://localhost:63342/challenge/cipher-bot/src/send_icon.png")'){
+		if (!icon_url.includes('send_icon.png')){
 			console.log($('#send-icon').css('background-image'));
 			console.log('triggered');
 			$("#send-icon").stop().animate({opacity: 0},50,function(){
@@ -220,7 +230,17 @@ $('textarea').on('keyup', function (event) {
 		//if not the right background - change to it
 		// add hover text hints
 		// if ()
-		$('#send-icon').css({ 'background-image': 'url("src/hover.png")'});
+		// $('#send-icon').css({ 'background-image': 'url("src/hover.png")'});
+
+
+		if (!icon_url.includes('hover.png')){
+
+			$("#send-icon").stop().animate({opacity: 0},50,function(){
+				$(this).css({'background-image': 'url("src/hover.png")'})
+					.animate({opacity: 1},{duration:150});
+			});
+		}
+
 	}
 });
 
@@ -235,4 +255,9 @@ $('textarea').on('focusout', function (event){
 	}
 });
 
-
+if (!icon_url.includes('send_icon.png')) {
+	$('#send-icon').on('click', function (event){
+		event.preventDefault();
+		sendMessage();
+	});
+}
