@@ -168,7 +168,7 @@ const sendMessage = () => {
 
 		//icon color change animation - https://coderwall.com/p/vtvmsa/change-the-background-image-with-animate
 		$("#send-icon").stop().animate({opacity: 0},50,function(){
-			$(this).css({'background-image': 'url("src/inactive.png")'})
+			$(this).css({'background-image': 'url("src/disabled.png")'})
 				.animate({opacity: 1},{duration:150});
 		});
 	}
@@ -217,10 +217,9 @@ $('textarea').on('keyup', function (event) {
 		$(this).val() === $(this).defaultValue){
 
 		if (!icon_url.includes('inactive.png')){
-			console.log($('#send-icon').css('background-image'));
-			console.log('triggered');
+
 			$("#send-icon").stop().animate({opacity: 0},50,function(){
-				$(this).css({'background-image': 'url("src/inactive.png")'})
+				$(this).css({'background-image': 'url("src/disabled.png")'})
 					.animate({opacity: 1},{duration:150});
 			});
 		}
