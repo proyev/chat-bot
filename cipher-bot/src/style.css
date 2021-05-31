@@ -42,6 +42,7 @@ main {
 .question-bubble {
     background-color: #fff7c8;
     float: right;
+    clear: right;
 }
 
 .answer-bubble {
@@ -73,7 +74,7 @@ footer {
     height: 75px;
     top: calc(100vh - 75px);
     left: 0;
-    position: absolute;
+    position: fixed;
     text-align: center;
     background-color: whitesmoke;
     opacity: 0.75;
