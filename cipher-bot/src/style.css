@@ -6,11 +6,11 @@
 }
 
 * {
-    padding: 0;
-    margin: 0;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -26,7 +26,7 @@ main {
     top: 0;
     left: 0;
     position: fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
     scroll-behavior: smooth;
 }
 
